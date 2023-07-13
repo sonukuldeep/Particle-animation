@@ -6,8 +6,8 @@ canvas.height = window.innerHeight
 const fps = 30
 const interval = 1000 / fps
 let lastTime = 0
-
-let particlesArray = []
+let requestAnimationFrameRef
+const particlesArray = []
 
 const mouse = {
     x: null,
@@ -18,6 +18,13 @@ const mouse = {
 window.addEventListener('mousemove', (e) => {
     mouse.x = e.x
     mouse.y = e.y
+})
+
+window.addEventListener('resize', () => {
+    cancelAnimationFrame(requestAnimationFrameRef)
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+    animate(0)
 })
 
 class Particle {
@@ -70,7 +77,7 @@ function animate(timestamp) {
         }
         lastTime = timestamp
     }
-    requestAnimationFrame(animate)
+    requestAnimationFrameRef = requestAnimationFrame(animate)
 }
 
 animate(0)

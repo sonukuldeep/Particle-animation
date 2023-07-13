@@ -5,7 +5,7 @@ This repo is a template to all animation related to particles.
 
 This is inspired by Frank's [video](https://www.youtube.com/watch?app=desktop&v=XGioNBHrFU4&feature=youtu.be)
 
-A heartly thanks to Frank, the creator of the tutorial and many similar tutorial on canvas element and animation. Please do which his channel
+A heartly thanks to Frank, the creator of the tutorial and many similar tutorials on canvas element and animation. Please do check his channel
 
 ## Acknowledgements
 
