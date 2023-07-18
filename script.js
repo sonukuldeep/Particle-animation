@@ -1,83 +1,75 @@
-const canvas = document.querySelector('canvas')
-const ctx = canvas.getContext('2d')
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
-
-const fps = 30
-const interval = 1000 / fps
-let lastTime = 0
-let requestAnimationFrameRef
-const particlesArray = []
-
-const mouse = {
-    x: null,
-    y: null,
-    radius: 25000
-}
-
-window.addEventListener('mousemove', (e) => {
-    mouse.x = e.x
-    mouse.y = e.y
-})
-
-window.addEventListener('resize', () => {
-    cancelAnimationFrame(requestAnimationFrameRef)
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
-    animate(0)
-})
-
-class Particle {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y
-        this.size = 3
-        this.baseX = this.x
-        this.baseY = this.y
-        this.density = (Math.random() * 30) + 1
+var canvas = document.querySelector('canvas');
+var ctx = canvas.getContext('2d');
+canvas.width = document.documentElement.clientWidth;
+canvas.height = document.documentElement.clientHeight;
+ctx.strokeStyle = 'gray';
+var fps = 30; // Frames per second
+var interval = 1000 / fps; // Interval between frames in milliseconds
+var lastTime = 0;
+window.addEventListener('resize', function () {
+    canvas.width = document.documentElement.clientWidth;
+    canvas.height = document.documentElement.clientHeight;
+});
+var Particle = /** @class */ (function () {
+    function Particle(effect) {
+        this.effect = effect;
+        this.radius = 5 + Math.random() * 40;
+        this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
+        this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
+        this.colorFactorX = 360 / this.effect.width;
+        this.colorFactorY = 360 / this.effect.height;
+        this.vx = 2;
     }
-
-    draw() {
-        ctx.fillStyle = 'white'
-        ctx.beginPath()
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
-        ctx.closePath()
-        ctx.fill()
+    Particle.prototype.draw = function (context) {
+        context.fillStyle = "hsl(".concat(this.x * this.colorFactorX, ", 100%, 50%)");
+        context.beginPath();
+        context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        context.fill();
+        context.stroke();
+    };
+    Particle.prototype.update = function () {
+        this.x += this.vx;
+        if ((this.x + this.radius) > this.effect.width || (this.x - this.radius) < 0)
+            this.vx *= -1;
+    };
+    return Particle;
+}());
+var Effect = /** @class */ (function () {
+    function Effect(canvas) {
+        this.canvas = canvas;
+        this.width = this.canvas.width;
+        this.height = this.canvas.height;
+        this.particles = [];
+        this.numberOfParticles = 200;
+        this.createParticle();
     }
-
-    update() {
-        const dx = mouse.x - this.x
-        const dy = mouse.y - this.y
-        const distance = dx * dx + dy * dy
-        if (distance < mouse.radius)
-            this.size = 5
-        else
-            this.size = 3
-    }
-}
-
-
-function inti() {
-    for (let index = 0; index < 500; index++) {
-        const randomX = Math.floor(Math.random() * canvas.width)
-        const randomY = Math.floor(Math.random() * canvas.height)
-        particlesArray.push(new Particle(randomX, randomY))
-    }
-}
-
-inti()
-
-function animate(timestamp) {
-    const elapsedTime = timestamp - lastTime
-    if (elapsedTime > interval) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        for (let i = 0; i < particlesArray.length; i++) {
-            particlesArray[i].draw()
-            particlesArray[i].update()
+    Effect.prototype.createParticle = function () {
+        for (var index = 0; index < this.numberOfParticles; index++) {
+            this.particles.push(new Particle(this));
         }
-        lastTime = timestamp
+    };
+    Effect.prototype.handleParticles = function (context) {
+        this.particles.forEach(function (particle) {
+            particle.draw(context);
+            particle.update();
+        });
+    };
+    return Effect;
+}());
+var effect = new Effect(canvas);
+function animation(timestamp) {
+    // Calculate the time difference since the last frame
+    var elapsedTime = timestamp - lastTime;
+    // Proceed only if enough time has elapsed based on the desired frame rate
+    if (elapsedTime > interval) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        effect.handleParticles(ctx);
+        // Update your animation or game logic here
+        // Render your animation or game state here
+        // Update the last time to the current timestamp
+        lastTime = timestamp;
     }
-    requestAnimationFrameRef = requestAnimationFrame(animate)
+    // Request the next frame
+    requestAnimationFrame(animation);
 }
-
-animate(0)
+animation(0);
