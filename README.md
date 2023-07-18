@@ -14,6 +14,10 @@ A heartly thanks to Frank, the creator of the tutorial and many similar tutorial
  - Every tutorial video out there
  - Opensource community
 
+## About repo
+> main:- static circles with mouse interaction
+![main repo](https://i.ibb.co/DWFKDfv/Screenshot-2023-07-18-142938.png)
+
 
 ## Installation
 
