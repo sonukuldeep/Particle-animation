@@ -21,6 +21,9 @@ A heartly thanks to Frank, the creator of the tutorial and many similar tutorial
 > animated_bubble:- moving circles in x axis, no mouse interaction
 ![bubble repo](https://i.ibb.co/djRtghM/Screenshot-2023-07-18-142938.png)
 
+> animated_bubble_2:- moving circles in both axis, with mouse interaction
+![bubble repo](https://i.ibb.co/Df88nVr/Screenshot-2023-07-18-142938.png)
+
 
 ## Installation
 
