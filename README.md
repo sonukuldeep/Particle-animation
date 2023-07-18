@@ -18,6 +18,12 @@ A heartly thanks to Frank, the creator of the tutorial and many similar tutorial
 > main:- static circles with mouse interaction
 ![main repo](https://i.ibb.co/DWFKDfv/Screenshot-2023-07-18-142938.png)
 
+> animated_bubble:- moving circles in x axis, no mouse interaction
+![bubble repo](https://i.ibb.co/djRtghM/Screenshot-2023-07-18-142938.png)
+
+> animated_bubble_2:- moving circles in both axis, with mouse interaction
+![bubble repo](https://i.ibb.co/Df88nVr/Screenshot-2023-07-18-142938.png)
+
 
 ## Installation
 
